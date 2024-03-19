@@ -1,6 +1,6 @@
 // expecting time to be a string in the format like '8:15' or '12:30'
 function convertTimeToWords(time) {
-  const map = {
+  const minutesToWordsMap = {
     1: 'one',
     2: 'two',
     3: 'three',
@@ -43,30 +43,30 @@ function convertTimeToWords(time) {
     return 'midday';
   }
 
-  const hour = parseInt(time.split(':')[0]);
+  const hours = parseInt(time.split(':')[0]);
   const minutes = parseInt(time.split(':')[1]);
   let timeModifier = '';
 
   if (minutes === 0) {
-    return `${map[hour]} o'clock`;
+    return `${minutesToWordsMap[hours]} o'clock`;
   }
 
   if (minutes > 30) {
     if (minutes === 45) {
       timeModifier = 'quarter to';
     } else {
-      const remainingMinutes = 60 - minutes;
-      timeModifier = `${map[remainingMinutes]} to`;
+      const remainingMinutesToHour = 60 - minutes;
+      timeModifier = `${minutesToWordsMap[remainingMinutesToHour]} to`;
     }
-    return `${timeModifier} ${map[hour + 1]}`;
+    return `${timeModifier} ${minutesToWordsMap[hours + 1]}`;
   }
 
   if (minutes === 15) {
     timeModifier = 'quarter past';
   } else {
-    timeModifier = `${map[minutes]} past`;
+    timeModifier = `${minutesToWordsMap[minutes]} past`;
   }
-  return `${timeModifier} ${map[hour]}`;
+  return `${timeModifier} ${minutesToWordsMap[hours]}`;
 }
 
 module.exports = { convertTimeToWords };
